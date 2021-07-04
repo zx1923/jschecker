@@ -5,12 +5,11 @@ const ts = require("gulp-typescript");
 const tsProject = ts.createProject("tsconfig.json");
 const fs = require('fs');
 
-gulp.task('clean', (done) => {
+gulp.task('clean:node', () => {
   const { src } = gulp;
-  if (fs.existsSync('dist')) {
-    src('dist').pipe(clean());
+  if (fs.existsSync('dist/node')) {
+    src('dist/node').pipe(clean());
   }
-  done();
 });
 
 gulp.task('build:ts', async () => {
@@ -18,19 +17,19 @@ gulp.task('build:ts', async () => {
   await tsProject.src()
     .pipe(tsProject())
     .js.pipe(uglyjs())
-    .pipe(dest("dist"));
+    .pipe(dest("dist/node"));
 });
 
 gulp.task('build:config', async () => {
   const { src, dest } = gulp;
-  await src('package.json').pipe(dest('dist'));
+  await src('package.json').pipe(dest('dist/node'));
 });
 
 gulp.task('dev:build', async () => {
   const { dest } = gulp;
   await tsProject.src()
     .pipe(tsProject())
-    .pipe(dest("dist"));
+    .pipe(dest("dist/node"));
 });
 
 gulp.task('dev', gulp.series('dev:build'));

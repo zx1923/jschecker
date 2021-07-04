@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build:node": "gulp",
+    "clean:node": "gulp clean",
+    "build:node": "npm run clean:node && gulp",
     "build:brow": "gulp dev",
     "test": "gulp && jest tests/ --coverage"
   },

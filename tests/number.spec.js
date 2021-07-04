@@ -1,4 +1,4 @@
-const Checker = require('../dist/index').default
+const Checker = require('../dist/node/index').default
 
 describe(`Test numbers`, () => {
 
