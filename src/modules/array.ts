@@ -6,6 +6,8 @@ enum ArrOrderType {
   Down = 'Down',
 };
 
+declare function ItemFunc(item: any): boolean;
+
 class Arr extends CheckBase {
 
   forbiddenValues: Array<any>
@@ -71,10 +73,16 @@ class Arr extends CheckBase {
     return this;
   }
 
-  every(fn: Function) {
+  every(fn: typeof ItemFunc | any) {
+    let checkFn = (it) => {
+      return Boolean(it);
+    }
+    if (isFunction(fn)) {
+      checkFn = fn;
+    }
     this.checkList['every'] = (inpdata: Array<any>): boolean => {
       for (let i = 0, len = inpdata.length; i < len; i++) {
-        if (!fn(inpdata[i])) {
+        if (!checkFn(inpdata[i])) {
           return false;
         }
       }
@@ -83,10 +91,16 @@ class Arr extends CheckBase {
     return this;
   }
 
-  some(fn: Function) {
+  some(fn: typeof ItemFunc | any) {
+    let checkFn = (it) => {
+      return Boolean(it);
+    }
+    if (isFunction(fn)) {
+      checkFn = fn;
+    }
     this.checkList['some'] = (inpdata: Array<any>): boolean => {
       for (let i = 0, len = inpdata.length; i < len; i++) {
-        if (fn(inpdata[i])) {
+        if (checkFn(inpdata[i])) {
           return true;
         }
       }
