@@ -5,10 +5,10 @@ const ts = require("gulp-typescript");
 const tsProject = ts.createProject("tsconfig.json");
 const fs = require('fs');
 
-gulp.task('clean:node', () => {
+gulp.task('clean:node', async () => {
   const { src } = gulp;
   if (fs.existsSync('dist/node')) {
-    src('dist/node').pipe(clean());
+    await src('dist/node').pipe(clean());
   }
 });
 

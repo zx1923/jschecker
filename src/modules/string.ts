@@ -1,5 +1,5 @@
 import CheckBase from "./types/base";
-import { isString } from '../utils/helper'
+import { isRegExp, isString } from '../utils/helper'
 
 class Str extends CheckBase {
   
@@ -83,7 +83,8 @@ class Str extends CheckBase {
 
   match(reg: RegExp) {
     this.checkList['match'] = (inpdata: string): boolean => {
-      return reg.test(inpdata);
+      const mathRes = inpdata.match(reg) || [];
+      return mathRes.join() === inpdata;
     }
     return this;
   }

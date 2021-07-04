@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "clean:node": "gulp clean",
+    "clean:node": "gulp clean:node",
+    "build:dev": "gulp dev",
     "build:node": "npm run clean:node && gulp",
-    "build:brow": "gulp dev",
-    "test": "gulp && jest tests/ --coverage"
+    "build:brow": "",
+    "test": "jest tests/ --coverage"
   },
   "author": "Sean",
   "license": "ISC",
