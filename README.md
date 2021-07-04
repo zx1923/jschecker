@@ -134,7 +134,7 @@ check(3.14);// false
 
 ```js
 const check = Checker.number().create();
-check(true);	// false, true 不是 Number 类似
+check(true);	// false, true 不是 Number 类型
 ```
 
 对输入值的初次判断时隐式的，在调用 check 方法时就已经完成，开发者无需单独调用。
@@ -318,7 +318,10 @@ check('helloworld');	// true
 
 #### string.empty(enabled)
 
-是否开启字空字符串判断，当设置为 true 时，若输入字符串为空，将直接返回 false 。
+是否开启字空字符串判断，enabled 取值：
+
+- `false`，**默认值**，表示禁用空字符串，当传入空字符串时校验结果为 false ；
+- `true`，表示使用空对象，允许传入空字符串；
 
 #### string.email()
 
@@ -422,7 +425,10 @@ check(arr2);	// true, 每一项的值相等
 
 #### array.empty(enabled)
 
-是都开启数组空判断，如果设置为 true ，那么当数组为空时，将直接返回 false 。
+是否开启字空数组判断，enabled 取值：
+
+- `false`，**默认值**，表示禁用空数组，当传入空数组时校验结果为 false ；
+- `true`，表示使用空数组，允许传入空数组；
 
 #### array.forbidden(value)
 
@@ -508,5 +514,93 @@ const checkDown = Checker.array().ordered('Down').create();
 
 checkUp(arrData);	// true
 checkDown(arrData);	// false
+```
+
+### object
+
+**object** 模块主要用于处理 `object` 类型相关的校验
+
+#### object.equal(value)
+
+判断输入的对象与预设对象是否相等，判断相等的原则：
+
+- 如果两个对象都指向同一个内存地址，则判断为相等；
+- 如果两个对象没有指向同一个地址，但是两个对象的每一个字段及其字段值都相等，则判断为相等；
+
+```js
+const obj1 = {a: 1, b: 2};
+const obj2 = obj1;
+const obj3 = {a: 1, b: 2};
+const obj4 = {...obj1, c: 3};
+const check = Checker.object().equal(obj1).create();
+
+check(obj2);	// true
+check(obj3);	// true
+check(obj4);	// false
+```
+
+#### object.empty(enabled)
+
+是否开启字空对象判断，enabled 取值：
+
+- `false`，**默认值**，表示禁用空对象，当传入空对象时校验结果为 false ；
+- `true`，表示使用空对象，允许传入空对象；
+
+#### object.includeKeys(keys)
+
+判断输入对象是否包含了所以指定的字段 。
+
+```js
+const keys = ['name', 'age'];
+const objErr = { a: 1, b: 2, c: 3 };
+const objRight = { name: 'Sean', age: 20, c: 3 };
+const checkNoInclude = Checker.object().create();
+const checkUseInclude = Checker.object().includeKeys(keys).create();
+checkNoInclude(objRight);	// true
+checkUseInclude(objRight);	// true
+checkNoInclude(objErr);		// true
+checkUseInclude(objErr);	// false
+```
+
+#### object.forbiddenKeys(keys)
+
+判断输入的对象是否包含了被禁用的字段，示例代码参考 `object.includeKeys` 即可。
+
+#### object.forbidden(value)
+
+判断输入的对象中的字段是否存在禁用的值。
+
+```js
+// 对象的值不能包含数字 1
+const obj = {a: 1, b: 2};
+const check = Checker.object().forbidden(1).create();
+check(obj);	// false
+```
+
+#### object.len(value)
+
+判断输入的对象的是否满足指定长度，长度的意思为 `Object.keys(inputObj).length` 。
+
+#### object.items(type)
+
+判断输入对象的每一字段的值的是否符合指定的类型，`type` 可以取值 `String` 、`Number` 等值，也可以是一个函数。
+
+```js
+const objNumber = {a: 1, b: 2, c: 3};
+const objMixed = {...objNumber, d: [1, 2], e: null};
+const checkByType = Checker.object().items('Number').create();
+checkByType(objNumber);	// true
+checkByType(objMixed);	// false
+```
+
+当 `type` 为一个 `Function` 时：
+
+```js
+const fn = (itvalue) => {
+  return ['Number', 'String', 'Array', 'Null'].includes(getTypeOf(itvalue));
+}
+const checkByFn = Checker.object().items(fn).create();
+checkByFn(objNumber);	// true
+checkByFn(objMixed);	// false
 ```
 
