@@ -1,10 +1,12 @@
 {
   "compilerOptions": {
-    "target": "ES6",
+    "target": "ES5",
     "module": "commonjs",
     "moduleResolution": "node",
     "removeComments": true,
-    "sourceMap": true
+    "declaration": true,
+    "outDir": "./dist/node",
+    "declarationDir": "./dist/types/"
   },
   "exclude": [
     "@types",
