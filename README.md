@@ -55,6 +55,14 @@
       - [array.max(value)](#arraymaxvalue)
       - [array.items(type)](#arrayitemstype)
       - [array.ordered(by)](#arrayorderedby)
+    - [object](#object)
+      - [object.equal(value)](#objectequalvalue)
+      - [object.empty(enabled)](#objectemptyenabled)
+      - [object.includeKeys(keys)](#objectincludekeyskeys)
+      - [object.forbiddenKeys(keys)](#objectforbiddenkeyskeys)
+      - [object.forbidden(value)](#objectforbiddenvalue)
+      - [object.len(value)](#objectlenvalue)
+      - [object.items(type)](#objectitemstype)
 ## Features
 
 - 轻量，没有任何依赖；
