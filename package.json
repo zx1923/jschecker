@@ -5,9 +5,12 @@
   "main": "index.js",
   "scripts": {
     "clean:node": "gulp clean:node",
-    "build:dev": "gulp dev",
+    "build:ts": "tsc",
+    "build:node-dev": "gulp dev",
     "build:node": "npm run clean:node && gulp",
-    "build:brow": "",
+    "build:brow": "webpack --config webpack.config.js --mode production",
+    "build:brow-dev": "webpack --config webpack.config.js --mode development",
+    "demo:brow": "webpack --config webpack.demo.js --mode development",
     "test": "jest tests/ --coverage"
   },
   "author": "Sean",
@@ -15,12 +18,19 @@
   "devDependencies": {
     "@types/jest": "^26.0.23",
     "@types/node": "^16.0.0",
+    "@types/webpack": "^5.28.0",
+    "babel-loader": "^8.2.2",
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
     "gulp": "^4.0.2",
     "gulp-clean": "^0.4.0",
     "gulp-typescript": "^6.0.0-alpha.1",
     "gulp-uglify": "^3.0.2",
+    "html-webpack-plugin": "^5.3.2",
     "jest": "^27.0.6",
     "mockjs": "^1.1.0",
-    "typescript": "^4.3.5"
+    "ts-loader": "^9.2.3",
+    "typescript": "^4.3.5",
+    "webpack": "^5.42.0",
+    "webpack-cli": "^4.7.2"
   }
 }
