@@ -36,7 +36,7 @@ class Arr extends CheckBase {
 
   equal(value: Array<any>) {
     // TODO: deep equal
-    this.checkList['equal'] = (inpdata: Array<any>): boolean => {
+    this.set('equal', (inpdata: Array<any>): boolean => {
       if (inpdata === value) {
         return true;
       }
@@ -49,21 +49,21 @@ class Arr extends CheckBase {
         }
       }
       return true;
-    }
+    });
     return this;
   }
 
   len(value: number) {
-    this.checkList['len'] = (inpdata: Array<any>): boolean => {
+    this.set('len', (inpdata: Array<any>): boolean => {
       return inpdata.length === value;
-    }
+    });
     return this;
   }
 
   empty(enabled: boolean = false) {
-    this.checkList['empty'] = (inpdata: Array<any>): boolean => {
+    this.set('empty', (inpdata: Array<any>): boolean => {
       return (inpdata && inpdata.length) ? true : enabled;
-    }
+    });
     return this;
   }
 
@@ -83,14 +83,14 @@ class Arr extends CheckBase {
     if (isFunction(fn)) {
       checkFn = fn;
     }
-    this.checkList['every'] = (inpdata: Array<any>): boolean => {
+    this.set('every', (inpdata: Array<any>): boolean => {
       for (let i = 0, len = inpdata.length; i < len; i++) {
         if (!checkFn(inpdata[i])) {
           return false;
         }
       }
       return true;
-    }
+    });
     return this;
   }
 
@@ -101,57 +101,57 @@ class Arr extends CheckBase {
     if (isFunction(fn)) {
       checkFn = fn;
     }
-    this.checkList['some'] = (inpdata: Array<any>): boolean => {
+    this.set('some', (inpdata: Array<any>): boolean => {
       for (let i = 0, len = inpdata.length; i < len; i++) {
         if (checkFn(inpdata[i])) {
           return true;
         }
       }
       return false;
-    }
+    });
     return this;
   }
 
   minLen(value: number) {
-    this.checkList['minLen'] = (inpdata: Array<any>): boolean => {
+    this.set('minLen', (inpdata: Array<any>): boolean => {
       return inpdata.length >= value;
-    }
+    });
     return this;
   }
 
   maxLen(value: number) {
-    this.checkList['maxLen'] = (inpdata: Array<any>): boolean => {
+    this.set('maxLen', (inpdata: Array<any>): boolean => {
       return inpdata.length <= value;
-    }
+    });
     return this;
   }
 
   min(value: number) {
-    this.checkList['min'] = (inpdata: Array<any>): boolean => {
+    this.set('min', (inpdata: Array<any>): boolean => {
       for (let i = 0; i < inpdata.length; i++) {
         if (inpdata[i] < value) {
           return false;
         }
       }
       return true;
-    }
+    });
     return this;
   }
 
   max(value: number) {
-    this.checkList['max'] = (inpdata: Array<any>): boolean => {
+    this.set('max', (inpdata: Array<any>): boolean => {
       for (let i = 0; i < inpdata.length; i++) {
         if (inpdata[i] > value) {
           return false;
         }
       }
       return true;
-    }
+    });
     return this;
   }
 
   items(type: string | Function) {
-    this.checkList['items'] = (inpdata: Array<any>): boolean => {
+    this.set('items', (inpdata: Array<any>): boolean => {
       let checkTypeFn = null;
       if (isString(type)) {
         checkTypeFn = (it) => {
@@ -170,12 +170,12 @@ class Arr extends CheckBase {
         }
       }
       return true;
-    }
+    });
     return this;
   }
 
   ordered(type: ArrOrderType) {
-    this.checkList['ordered'] = (inpdata: Array<any>): boolean => {
+    this.set('ordered', (inpdata: Array<any>): boolean => {
       let orderFn = null;
       if (type === ArrOrderType.Up) {
         orderFn = (a, b): boolean => { return a <= b };
@@ -192,7 +192,7 @@ class Arr extends CheckBase {
         }
       }
       return true;
-    }
+    });
     return this;
   }
 

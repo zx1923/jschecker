@@ -24,43 +24,43 @@ class Obj extends CheckBase {
   }
 
   equal(value: object) {
-    this.checkList['equal'] = (inpdata: object): boolean => {
+    this.set('equal', (inpdata: object): boolean => {
       if (inpdata === value) {
         return true;
       }
       return JSON.stringify(inpdata) === JSON.stringify(value);
-    }
+    });
     return this;
   }
 
   empty(enabled: boolean = false) {
-    this.checkList['empty'] = (inpdata: object): boolean => {
+    this.set('empty', (inpdata: object): boolean => {
       return (inpdata && Object.keys(inpdata).length) ? true : enabled;
-    }
+    });
     return this;
   }
 
   includeKeys(keys: Array<string>) {
-    this.checkList['includeKeys'] = (inpdata: object): boolean => {
+    this.set('includeKeys', (inpdata: object): boolean => {
       for (let i = 0, len = keys.length; i < len; i++) {
         if (typeof inpdata[keys[i]] === 'undefined') {
           return false;
         }
       }
       return true;
-    }
+    });
     return this;
   }
 
   forbiddenKeys(keys: Array<string>) {
-    this.checkList['forbiddenKeys'] = (inpdata: object): boolean => {
+    this.set('forbiddenKeys', (inpdata: object): boolean => {
       for (let i = 0, len = keys.length; i < len; i++) {
         if (typeof inpdata[keys[i]] !== 'undefined') {
           return false;
         }
       }
       return true;
-    }
+    });
     return this;
   }
 
@@ -74,14 +74,14 @@ class Obj extends CheckBase {
   }
 
   len(value: number) {
-    this.checkList['len'] = (inpdata: object): boolean => {
+    this.set('len', (inpdata: object): boolean => {
       return Object.keys(inpdata).length === value;
-    }
+    });
     return this;
   }
 
   items(type: string | Function) {
-    this.checkList['items'] = (inpdata: Array<any>): boolean => {
+    this.set('items', (inpdata: Array<any>): boolean => {
       let checkTypeFn = null;
       if (isString(type)) {
         checkTypeFn = (itValue) => {
@@ -100,7 +100,7 @@ class Obj extends CheckBase {
         }
       }
       return true;
-    }
+    });
     return this;
   }
 
