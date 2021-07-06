@@ -7,7 +7,7 @@ class Str extends CheckBase {
     super();
   }
 
-  is(value: any) {
+  protected is(value: any) {
     return isString(value);
   }
 
@@ -83,6 +83,9 @@ class Str extends CheckBase {
 
   match(reg: RegExp) {
     this.checkList['match'] = (inpdata: string): boolean => {
+      if (!isRegExp(reg)) {
+        throw `Param of match must be type of RegExp`;
+      }
       const mathRes = inpdata.match(reg) || [];
       return mathRes.join() === inpdata;
     }

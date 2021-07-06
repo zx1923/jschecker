@@ -2,14 +2,14 @@ import CheckBase from "./types/base";
 import { isArray, isString, isFunction, getTypeOf, isObject } from '../utils/helper';
 
 class Obj extends CheckBase {
-  forbiddenValues: Array<any>
+  private forbiddenValues: Array<any>
 
   constructor() {
     super();
     this.forbiddenValues = [];
   }
 
-  is(inpdata: any) {
+  protected is(inpdata: any) {
     if (!isObject(inpdata)) {
       return false;
     }

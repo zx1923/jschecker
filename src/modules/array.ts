@@ -10,14 +10,17 @@ declare function ItemFunc(item: any): boolean;
 
 class Arr extends CheckBase {
 
-  forbiddenValues: Array<any>
+  private forbiddenValues: Array<any>
   
   constructor() {
     super();
     this.forbiddenValues = [];
   }
 
-  is(inpdata: Array<any>) {
+  protected is(inpdata: Array<any>) {
+    if ((!arguments.length || typeof inpdata === 'undefined') && !this.required) {
+      return true;
+    }
     if (!isArray(inpdata)) {
       return false;
     }

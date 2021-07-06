@@ -7,7 +7,10 @@ class Num extends CheckBase {
     super();
   }
 
-  is(inpdata: any) {
+  protected is(inpdata: any) {
+    if ((!arguments.length || typeof inpdata === 'undefined') && !this.required) {
+      return true;
+    }
     return !isNaN(inpdata) && isNumber(inpdata);
   }
 

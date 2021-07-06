@@ -2,6 +2,8 @@ import Arr from './modules/array';
 import Num from './modules/number';
 import Obj from './modules/object';
 import Str from './modules/string';
+import Func from './modules/function';
+import Bool from './modules/boolean';
 import { and, or, not } from './modules/logic';
 
 class Checker {
@@ -35,6 +37,14 @@ class Checker {
    */
   static object() {
     return new Obj();
+  }
+
+  static func() {
+    return new Func();
+  }
+
+  static boolean() {
+    return new Bool();
   }
 
   static and = and
