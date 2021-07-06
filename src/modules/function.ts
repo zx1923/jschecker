@@ -1,4 +1,4 @@
-import CheckBase from "./types/base";
+import CheckBase from "./base/check";
 import { isFunction } from '../utils/helper'
 
 class Func extends CheckBase {

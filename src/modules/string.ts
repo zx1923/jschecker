@@ -1,4 +1,4 @@
-import CheckBase from "./types/base";
+import CheckBase from "./base/check";
 import { isRegExp, isString } from '../utils/helper'
 
 class Str extends CheckBase {

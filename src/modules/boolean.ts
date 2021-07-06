@@ -1,4 +1,4 @@
-import CheckBase from "./types/base";
+import CheckBase from "./base/check";
 
 class Bool extends CheckBase {
   

@@ -1,4 +1,4 @@
-import CheckBase from "./types/base";
+import CheckBase from "./base/check";
 import { isArray, isString, isFunction, getTypeOf } from '../utils/helper';
 
 enum ArrOrderType {
