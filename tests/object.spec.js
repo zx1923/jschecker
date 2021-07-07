@@ -118,5 +118,13 @@ describe(`Test object`, () => {
       expect(checkWillBeErr(objNumber)).toThrow(`type must be a string or a function`);
     } catch (e) {}
   });
+  
+  test('object check width required()', () => {
+    const checkRequired = Checker.object().require(true).create();
+    const checkNotRequired = Checker.object().require(false).create();
+
+    expect(checkRequired()).toBeFalsy();
+    expect(checkNotRequired()).toBeTruthy();
+  });
 
 });

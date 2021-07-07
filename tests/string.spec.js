@@ -117,5 +117,13 @@ describe(`Test strings`, () => {
     expect(check1(rdmstr)).toBeFalsy();
     expect(check1(ckstr)).toBeTruthy();
   });
+  
+  test('string check width required()', () => {
+    const checkRequired = Checker.string().require(true).create();
+    const checkNotRequired = Checker.string().require(false).create();
+
+    expect(checkRequired()).toBeFalsy();
+    expect(checkNotRequired()).toBeTruthy();
+  });
 
 });

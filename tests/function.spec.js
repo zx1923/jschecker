@@ -11,4 +11,12 @@ describe(`Test func`, () => {
     expect(check([1, 2])).toBeFalsy();
   });
 
+  test('func check width required()', () => {
+    const checkRequired = Checker.func().require(true).create();
+    const checkNotRequired = Checker.func().require(false).create();
+
+    expect(checkRequired()).toBeFalsy();
+    expect(checkNotRequired()).toBeTruthy();
+  });
+
 });

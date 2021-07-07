@@ -79,5 +79,13 @@ describe(`Test numbers`, () => {
     expect(inCheck(5)).toBeTruthy();
     expect(inCheck(100)).toBeFalsy();
   });
+  
+  test('number check width required()', () => {
+    const checkRequired = Checker.number().require(true).create();
+    const checkNotRequired = Checker.number().require(false).create();
+
+    expect(checkRequired()).toBeFalsy();
+    expect(checkNotRequired()).toBeTruthy();
+  });
 
 });

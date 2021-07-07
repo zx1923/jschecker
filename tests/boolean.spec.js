@@ -53,5 +53,13 @@ describe(`Test boolean`, () => {
     expect(check(null)).toBeTruthy();
     expect(check(undefined)).toBeTruthy();
   });
+  
+  test('boolean check width required()', () => {
+    const checkRequired = Checker.boolean().require(true).create();
+    const checkNotRequired = Checker.boolean().require(false).create();
+
+    expect(checkRequired()).toBeFalsy();
+    expect(checkNotRequired()).toBeTruthy();
+  });
 
 });
