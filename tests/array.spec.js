@@ -95,7 +95,7 @@ describe(`Test array`, () => {
 
     const check2 = Checker.array().valid(1).create();
     expect(check2(arr1)).toBeFalsy();
-    
+
     const check4 = Checker.array().valid([1, 6, 9]).create();
     expect(check4(arr1)).toBeFalsy();
 
@@ -132,6 +132,14 @@ describe(`Test array`, () => {
 
     expect(checkOdd(arrEven)).toBeFalsy();
     expect(checkOdd(arrMixed)).toBeTruthy();
+  });
+
+  test('array check width required()', () => {
+    const checkRequired = Checker.array().require(true).create();
+    const checkNotRequired = Checker.array().require(false).create();
+
+    expect(checkRequired()).toBeFalsy();
+    expect(checkNotRequired()).toBeTruthy();
   });
 
 });

@@ -67,6 +67,9 @@ class CheckBase implements InputCheck {
 
   create() {
     return (...args: any): boolean => {
+      if (!args.length && this.required) {
+        return false;
+      }
       for (let i = 0, len = args.length; i < len; i++) {
         if (!this.is(args[i]) || !checkInputData(this.checkList, args[i])) {
           return false;

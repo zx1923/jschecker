@@ -11,12 +11,9 @@ enum ArrOrderType {
 declare function ItemFunc(item: any): boolean;
 
 class Arr extends CheckBase {
-
-  private forbiddenValues: Array<any>
   
   constructor() {
     super();
-    this.forbiddenValues = [];
   }
 
   private _isAllInclude(srcVal: Array<any>, beCheck: Array<any>) {
@@ -29,17 +26,8 @@ class Arr extends CheckBase {
   }
 
   protected is(inpdata: Array<any>) {
-    if ((!arguments.length || typeof inpdata === 'undefined') && !this.required) {
-      return true;
-    }
     if (!isArray(inpdata)) {
       return false;
-    }
-    // forbidden check
-    for (let i = 0, len = this.forbiddenValues.length; i < len; i++) {
-      if (inpdata.includes(this.forbiddenValues[i])) {
-        return false;
-      }
     }
 
     return true;
