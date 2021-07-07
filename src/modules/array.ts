@@ -1,5 +1,7 @@
 import CheckBase from "./base/check";
 import { isArray, isString, isFunction, getTypeOf } from '../utils/helper';
+import { arrCheckRules } from './base/verify';
+import { typeError } from '../utils/error';
 
 enum ArrOrderType {
   Up = 'Up',
@@ -15,6 +17,15 @@ class Arr extends CheckBase {
   constructor() {
     super();
     this.forbiddenValues = [];
+  }
+
+  private _isAllInclude(srcVal: Array<any>, beCheck: Array<any>) {
+    for (let i = 0, len = beCheck.length; i < len; i++) {
+      if (!srcVal.includes(beCheck[i])) {
+        return false;
+      }
+    }
+    return true;
   }
 
   protected is(inpdata: Array<any>) {
@@ -49,31 +60,46 @@ class Arr extends CheckBase {
         }
       }
       return true;
-    });
+    }, value);
     return this;
   }
 
   len(value: number) {
     this.set('len', (inpdata: Array<any>): boolean => {
       return inpdata.length === value;
-    });
+    }, value);
     return this;
   }
 
   empty(enabled: boolean = false) {
     this.set('empty', (inpdata: Array<any>): boolean => {
       return (inpdata && inpdata.length) ? true : enabled;
-    });
+    }, enabled);
     return this;
   }
 
-  forbidden(value: any) {
-    if (isArray(value)) {
-      this.forbiddenValues = this.forbiddenValues.concat(value);
-    } else {
-      this.forbiddenValues.push(value);
+  invalid(valsets: any | Array<any>) {
+    const type = getTypeOf(valsets);
+    if (!arrCheckRules.itemValTypeVerify(type)) {
+      throw typeError(type);
     }
-    return this;
+    const check = (inpdata: Array<any>) => {
+      const vals = isArray(valsets) ? valsets : [valsets];
+      return !this._isAllInclude(inpdata, vals);
+    }
+    return this.set('invalid', check, valsets);
+  }
+
+  valid(valsets: any | Array<any>) {
+    const type = getTypeOf(valsets);
+    if (!arrCheckRules.itemValTypeVerify(type)) {
+      throw typeError(type);
+    }
+    const check = (inpdata: Array<any>) => {
+      const vals = isArray(valsets) ? valsets : [valsets];
+      return this._isAllInclude(vals, inpdata);
+    }
+    return this.set('valid', check, valsets);
   }
 
   every(fn: typeof ItemFunc | any) {
@@ -90,7 +116,7 @@ class Arr extends CheckBase {
         }
       }
       return true;
-    });
+    }, fn);
     return this;
   }
 
@@ -108,21 +134,21 @@ class Arr extends CheckBase {
         }
       }
       return false;
-    });
+    }, fn);
     return this;
   }
 
   minLen(value: number) {
     this.set('minLen', (inpdata: Array<any>): boolean => {
       return inpdata.length >= value;
-    });
+    }, value);
     return this;
   }
 
   maxLen(value: number) {
     this.set('maxLen', (inpdata: Array<any>): boolean => {
       return inpdata.length <= value;
-    });
+    }, value);
     return this;
   }
 
@@ -134,7 +160,7 @@ class Arr extends CheckBase {
         }
       }
       return true;
-    });
+    }, value);
     return this;
   }
 
@@ -146,7 +172,7 @@ class Arr extends CheckBase {
         }
       }
       return true;
-    });
+    }, value);
     return this;
   }
 
@@ -170,7 +196,7 @@ class Arr extends CheckBase {
         }
       }
       return true;
-    });
+    }, type);
     return this;
   }
 
@@ -192,7 +218,7 @@ class Arr extends CheckBase {
         }
       }
       return true;
-    });
+    }, type);
     return this;
   }
 

@@ -11,6 +11,13 @@ class Func extends CheckBase {
     return isFunction(value);
   }
 
+  oneOf(enumsets: Array<Function>) {
+    this.set('oneOf', (inpdata: Function): boolean => {
+      return enumsets.includes(inpdata);
+    }, enumsets);
+    return this;
+  }
+
 }
 
 export default Func;

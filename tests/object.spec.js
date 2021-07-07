@@ -45,12 +45,12 @@ describe(`Test object`, () => {
     expect(check2(emptyObj)).toBeTruthy();
   });
 
-  test('object check width forbidden()', () => {
+  test('object check width invalidValues()', () => {
     const obj = {a: 1, b: 2};
     const objRight = {name: 'Sean', list: [ 1, 2, 3 ]};
     const forbiddenArr = [1, 5];
-    const check1 = Checker.object().forbidden(1).create();
-    const check2 = Checker.object().forbidden(forbiddenArr).create();
+    const check1 = Checker.object().invalidValues(1).create();
+    const check2 = Checker.object().invalidValues(forbiddenArr).create();
 
     expect(check1(obj)).toBeFalsy();
     expect(check2(obj)).toBeFalsy();
@@ -58,12 +58,12 @@ describe(`Test object`, () => {
     expect(check2(objRight)).toBeTruthy();
   });
 
-  test('object check width forbiddenKeys', () => {
+  test('object check width invalidKeys()', () => {
     const keys = ['name', 'age'];
     const objRight = { a: 1, b: 2, c: 3 };
     const objErr = { name: 'Sean', age: 20, c: 3 };
     const checkNoForbidden = Checker.object().create();
-    const checkUseForbidden = Checker.object().forbiddenKeys(keys).create();
+    const checkUseForbidden = Checker.object().invalidKeys(keys).create();
 
     expect(checkNoForbidden(objRight)).toBeTruthy();
     expect(checkNoForbidden(objErr)).toBeTruthy();

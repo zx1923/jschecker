@@ -78,13 +78,30 @@ describe(`Test array`, () => {
     expect(check(arr3)).toBeFalsy();
   });
 
-  test('array check width forbidden()', () => {
+  test('array check width invalid()', () => {
     const arr1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
-    const check1 = Checker.array().forbidden(0).create();
+    const check1 = Checker.array().invalid(0).create();
     expect(check1(arr1)).toBeFalsy();
 
-    const check2 = Checker.array().forbidden([1, 2, 3]).create();
+    const check2 = Checker.array().invalid([1, 2, 3]).create();
     expect(check2(arr1)).toBeFalsy();
+  });
+
+  test('array check width valid()', () => {
+    const arr1 = [1, 2, 3, 4, 5, 5, 1, 3, 4, 2];
+
+    const check1 = Checker.array().valid(0).create();
+    expect(check1(arr1)).toBeFalsy();
+
+    const check2 = Checker.array().valid(1).create();
+    expect(check2(arr1)).toBeFalsy();
+    
+    const check4 = Checker.array().valid([1, 6, 9]).create();
+    expect(check4(arr1)).toBeFalsy();
+
+    const check3 = Checker.array().valid([1, 2, 3, 4, 5]).create();
+    expect(check3(arr1)).toBeTruthy();
+
   });
 
   test('array check width empty()', () => {

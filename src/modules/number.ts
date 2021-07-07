@@ -17,21 +17,21 @@ class Num extends CheckBase {
   equal(value: number) {
     this.set('equal', (inpdata: number): boolean => {
       return inpdata === value;
-    });
+    }, value);
     return this;
   }
   
   min(value: number) {
     this.set('min', (inpdata: number): boolean => {
       return inpdata >= value;
-    });
+    }, value);
     return this;
   }
 
   max(value: number) {
     this.set('max', (inpdata: number): boolean => {
       return inpdata <= value;
-    });
+    }, value);
     return this;
   }
 
@@ -70,24 +70,24 @@ class Num extends CheckBase {
     return this;
   }
 
-  oneOf(nums: Array<number>) {
-    this.set('in', (inpdata: number): boolean => {
-      return nums.indexOf(inpdata) >= 0;
-    });
-    return this;
-  }
-
   less(value: number) {
     this.set('less', (inpdata: number): boolean => {
       return inpdata < value;
-    });
+    }, value);
     return this;
   }
 
   greater(value: number) {
     this.set('greater', (inpdata: number): boolean => {
       return inpdata > value;
-    });
+    }, value);
+    return this;
+  }
+
+  oneOf(enumsets: Array<number>) {
+    this.set('oneOf', (inpdata: number): boolean => {
+      return enumsets.includes(inpdata);
+    }, enumsets);
     return this;
   }
 

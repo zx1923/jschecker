@@ -1,26 +1,42 @@
 import CheckBase from "./base/check";
 import { isArray, isString, isFunction, getTypeOf, isObject } from '../utils/helper';
+import { objCheckRules } from './base/verify';
 
 class Obj extends CheckBase {
-  private forbiddenValues: Array<any>
 
   constructor() {
     super();
-    this.forbiddenValues = [];
   }
 
   protected is(inpdata: any) {
     if (!isObject(inpdata)) {
       return false;
     }
-    // forbidden check
-    for (let key in inpdata) {
-      if (this.forbiddenValues.includes(inpdata[key])) {
-        return false;
-      }
-      // TODO: deep check
-    }
     return true;
+  }
+
+  /**
+   * 检测对象中是否包含指定数据
+   * 
+   * @param obj 被检测对象
+   * @param checkFn 检测函数
+   * @param deep 是否深度检测
+   */
+  private _isObjInclude(obj: object, checkFn: Function, deep: boolean = false) {
+    if (!Object.keys(obj).length) {
+      return false;
+    }
+    for (let key in obj) {
+      // 初次检测，obj[key] 可能为引用类型
+      if (checkFn(key, obj[key])) {
+        return true;
+      }
+      // 深度检测
+      if (deep) {
+        return this._isObjInclude(obj[key], checkFn, deep);
+      }
+    }
+    return false;
   }
 
   equal(value: object) {
@@ -29,14 +45,14 @@ class Obj extends CheckBase {
         return true;
       }
       return JSON.stringify(inpdata) === JSON.stringify(value);
-    });
+    }, value);
     return this;
   }
 
   empty(enabled: boolean = false) {
     this.set('empty', (inpdata: object): boolean => {
       return (inpdata && Object.keys(inpdata).length) ? true : enabled;
-    });
+    }, enabled);
     return this;
   }
 
@@ -48,35 +64,45 @@ class Obj extends CheckBase {
         }
       }
       return true;
-    });
+    }, keys);
     return this;
   }
 
-  forbiddenKeys(keys: Array<string>) {
-    this.set('forbiddenKeys', (inpdata: object): boolean => {
-      for (let i = 0, len = keys.length; i < len; i++) {
-        if (typeof inpdata[keys[i]] !== 'undefined') {
-          return false;
-        }
-      }
-      return true;
-    });
-    return this;
-  }
-
-  forbidden(value: any | Array<string>) {
-    if (isArray(value)) {
-      this.forbiddenValues = this.forbiddenValues.concat(value);
-    } else {
-      this.forbiddenValues.push(value);
+  invalidKeys(keysets: string | Array<string>, deepCheck: boolean = false) {
+    const type = getTypeOf(keysets);
+    if (!objCheckRules.validKeysTypeVerify(type)) {
+      throw `Type of keysets '${type}' is invalid`;
     }
+    let keyscheck = isArray(keysets) ? keysets : [keysets];
+    this.set('invalidKeys', (inpdata: object) => {
+      const checkFn = (key: string, value: any) => {
+        return keyscheck.includes(key);
+      }
+      return !this._isObjInclude(inpdata, checkFn, deepCheck);
+    }, keysets);
+    return this;
+  }
+
+  invalidValues(valsets: any | Array<string>, deepCheck: boolean = false) {
+    const type = getTypeOf(valsets);
+    if (!objCheckRules.validValsTypeVerify(type)) {
+      throw `Type of keysets '${type}' is invalid`;
+    }
+    let valscheck = isArray(valsets) ? valsets : [valsets];
+
+    this.set('invalidValues', (inpdata: object) => {
+      const checkFn = (key: string, value: any) => {
+        return valscheck.includes(value);
+      }
+      return !this._isObjInclude(inpdata, checkFn, deepCheck);
+    }, valsets);
     return this;
   }
 
   len(value: number) {
     this.set('len', (inpdata: object): boolean => {
       return Object.keys(inpdata).length === value;
-    });
+    }, value);
     return this;
   }
 
@@ -100,7 +126,7 @@ class Obj extends CheckBase {
         }
       }
       return true;
-    });
+    }, type);
     return this;
   }
 

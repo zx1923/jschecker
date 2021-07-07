@@ -21,11 +21,17 @@ function checkInputData(checkList: object, inpdata: any) {
 
 class CheckBase implements InputCheck {
   protected checkList: object
+  protected descList: object
   protected required: boolean
 
   constructor() {
     this.checkList = {};
+    this.descList = {};
     this.required = true;
+  }
+
+  private translateDesc(descItem: string, val: any) {
+
   }
 
   protected is(data: any): boolean {
@@ -36,8 +42,10 @@ class CheckBase implements InputCheck {
     throw `Subclasses must implement this method`;
   }
 
-  set(item: string, method: Function) {
+  set(item: string, method: Function, valset: any = null, desc: string = null) {
     this.checkList[item] = method;
+    this.descList[item] = this.translateDesc(desc, valset);
+    return this;
   }
 
   require(value: boolean) {
@@ -45,19 +53,27 @@ class CheckBase implements InputCheck {
     return this;
   }
 
-  create(...value: any) {
-    const fn = (...args: any): boolean => {
+  summary() {
+    for (let item in this.descList) {
+      const desc = this.descList[item];
+      console.log(desc);
+    }
+  }
+
+  addRule(name: string, callback: Function, desc: string) {
+    this.set(name, callback, desc);
+    return this;
+  }
+
+  create() {
+    return (...args: any): boolean => {
       for (let i = 0, len = args.length; i < len; i++) {
         if (!this.is(args[i]) || !checkInputData(this.checkList, args[i])) {
           return false;
         }
       }
       return true;
-    }
-    if (!arguments.length) {
-      return fn;
-    }
-    return fn(...value);
+    };
   }
 }
 

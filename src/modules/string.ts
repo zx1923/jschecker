@@ -14,35 +14,35 @@ class Str extends CheckBase {
   equal(value: string) {
     this.set('equal', (inpdata): boolean => {
       return inpdata === value;
-    });
+    }, value);
     return this;
   }
 
   min(value: number) {
     this.set('min', (inpdata): boolean => {
       return inpdata.length >= value;
-    });
+    }, value);
     return this;
   }
 
   max(value: number) {
     this.set('max', (inpdata): boolean => {
       return inpdata.length <= value;
-    });
+    }, value);
     return this;
   }
 
   len(value: number) {
     this.set('len', (inpdata): boolean => {
       return inpdata.length === value;
-    });
+    }, value);
     return this;
   }
 
   empty(enabled: boolean = false) {
     this.set('empty', (inpdata): boolean => {
       return (inpdata && inpdata.length) ? true : enabled;
-    });
+    }, enabled);
     return this;
   }
 
@@ -88,21 +88,28 @@ class Str extends CheckBase {
       }
       const mathRes = inpdata.match(reg) || [];
       return mathRes.join() === inpdata;
-    });
+    }, reg);
     return this;
   }
 
   startWidth(value: string) {
     this.set('startWidth', (inpdata: string): boolean => {
       return inpdata.indexOf(value) === 0;
-    });
+    }, value);
     return this;
   }
 
   endWidth(value: string) {
     this.set('endWidth', (inpdata: string): boolean => {
       return inpdata.lastIndexOf(value) === inpdata.length - value.length;
-    });
+    }, value);
+    return this;
+  }
+
+  oneOf(enumsets: Array<string>) {
+    this.set('oneOf', (inpdata: string): boolean => {
+      return enumsets.includes(inpdata);
+    }, enumsets);
     return this;
   }
 }
