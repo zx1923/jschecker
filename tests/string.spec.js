@@ -109,7 +109,7 @@ describe(`Test strings`, () => {
     expect(check2(Random.string())).toBeTruthy();
   });
 
-  test('string check batch', () => {
+  test('string check mixed', () => {
     const check1 = Checker.string().min(1).max(100).startWidth('abc').endWidth('012').lowercase().create();
     const rdmstr = Random.string(94);
     const ckstr = `abc${rdmstr}012`.toLowerCase();
@@ -124,6 +124,14 @@ describe(`Test strings`, () => {
 
     expect(checkRequired()).toBeFalsy();
     expect(checkNotRequired()).toBeTruthy();
+  });
+  
+  test('string check width batch()', () => {
+    const check = Checker.string().lowercase().min(1).max(5).create();
+
+    expect(check('12', '34', '56')).toBeTruthy();
+    expect(check('12', '34', '5TT6', '41fgdg')).toBeFalsy();
+    expect(check(['12', '5TT6', '41fgdg'])).toBeFalsy();
   });
 
 });
