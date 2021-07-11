@@ -45,6 +45,16 @@ function isFunction(obj: any): boolean {
 }
 
 /**
+ * 是否为异步 function
+ * 
+ * @param obj 被检测值
+ * @returns true/false
+ */
+function isAsyncFunction(obj: any) {
+  return _is(obj, 'AsyncFunction');
+}
+
+/**
  * 是否为正则
  * 
  * @param obj 被检测对象
@@ -77,6 +87,7 @@ export {
   isObject,
   isArray,
   isFunction,
+  isAsyncFunction,
   isRegExp,
   isString,
   isNumber,

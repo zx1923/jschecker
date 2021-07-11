@@ -19,4 +19,13 @@ describe(`Test func`, () => {
     expect(checkNotRequired()).toBeTruthy();
   });
 
+  test('func check width asynchronous()', () => {
+    const checkAsyncFn = Checker.func().asynchronous().create();
+    const syncfn = () => {};
+    async function asyncfn() { };
+
+    expect(checkAsyncFn(syncfn)).toBeFalsy();
+    expect(checkAsyncFn(asyncfn)).toBeTruthy();
+  });
+
 });
