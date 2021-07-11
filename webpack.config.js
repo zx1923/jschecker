@@ -16,8 +16,6 @@ function getArgValue(key) {
 const buildTarget = getArgValue('--target') || 'web';
 const buildOutPath = path.resolve(__dirname, `dist/${buildTarget}`);
 
-console.log(buildTarget);
-
 module.exports = {
   target: buildTarget,
   entry: './src/index.ts',
@@ -25,7 +23,7 @@ module.exports = {
     filename: 'jschecker.js',
     path: buildOutPath,
     libraryTarget: 'umd',
-    // library: "Checker",
+    library: "Checker",
   },
   module: {
     rules: [
