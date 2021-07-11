@@ -7,8 +7,8 @@ const fs = require('fs');
 
 gulp.task('clean:node', async () => {
   const { src } = gulp;
-  if (fs.existsSync('dist/node')) {
-    await src('dist/node').pipe(clean());
+  if (fs.existsSync('dist/build')) {
+    await src('dist/build').pipe(clean());
   }
 });
 
@@ -17,19 +17,19 @@ gulp.task('build:ts', async () => {
   await tsProject.src()
     .pipe(tsProject())
     .js.pipe(uglyjs())
-    .pipe(dest("dist/node"));
+    .pipe(dest("dist/build"));
 });
 
 gulp.task('build:config', async () => {
   const { src, dest } = gulp;
-  await src('package.json').pipe(dest('dist/node'));
+  await src('package.json').pipe(dest('dist/build'));
 });
 
 gulp.task('dev:build', async () => {
   const { dest } = gulp;
   await tsProject.src()
     .pipe(tsProject())
-    .pipe(dest("dist/node"));
+    .pipe(dest("dist/build"));
 });
 
 gulp.task('dev', gulp.series('dev:build'));

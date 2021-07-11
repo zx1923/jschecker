@@ -1,4 +1,4 @@
-const Checker = require('../dist/node/jschecker');
+const Checker = require('../dist/build/index');
 const { Random } = require('mockjs');
 
 describe(`Test strings`, () => {

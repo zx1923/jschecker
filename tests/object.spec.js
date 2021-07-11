@@ -1,4 +1,4 @@
-const Checker = require('../dist/node/jschecker');
+const Checker = require('../dist/build/index');
 
 function getTypeOf(obj) {
   let type = Object.prototype.toString.call(obj);
