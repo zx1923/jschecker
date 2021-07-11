@@ -31,8 +31,11 @@ describe(`Test array`, () => {
   test('array check width items()', () => {
     const arr1 = [1, 2, 3, 4, 5, 0];
     const arr2 = ['a', 'b', 'c', '4', '5', '0'];
-    const checkNumber = Checker.array().items('Number').create();
-    const checkString = Checker.array().items('String').create();
+    const mustBeNum = Checker.number().create();
+    const mustBeStr = Checker.string().create();
+
+    const checkNumber = Checker.array().items(mustBeNum).create();
+    const checkString = Checker.array().items(mustBeStr).create();
 
     expect(checkNumber(arr1)).toBeTruthy();
     expect(checkString(arr1)).toBeFalsy();

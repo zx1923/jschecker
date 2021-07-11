@@ -29,7 +29,6 @@ class Arr extends CheckBase {
     if (!isArray(inpdata)) {
       return false;
     }
-
     return true;
   }
 
@@ -98,12 +97,9 @@ class Arr extends CheckBase {
       checkFn = fn;
     }
     this.set('every', (inpdata: Array<any>): boolean => {
-      for (let i = 0, len = inpdata.length; i < len; i++) {
-        if (!checkFn(inpdata[i])) {
-          return false;
-        }
-      }
-      return true;
+      return inpdata.every(el => {
+        return checkFn(el);
+      });
     }, fn);
     return this;
   }
@@ -116,12 +112,9 @@ class Arr extends CheckBase {
       checkFn = fn;
     }
     this.set('some', (inpdata: Array<any>): boolean => {
-      for (let i = 0, len = inpdata.length; i < len; i++) {
-        if (checkFn(inpdata[i])) {
-          return true;
-        }
-      }
-      return false;
+      return inpdata.some(el => {
+        return checkFn(el);
+      });
     }, fn);
     return this;
   }
@@ -142,49 +135,31 @@ class Arr extends CheckBase {
 
   min(value: number) {
     this.set('min', (inpdata: Array<any>): boolean => {
-      for (let i = 0; i < inpdata.length; i++) {
-        if (inpdata[i] < value) {
-          return false;
-        }
-      }
-      return true;
+      return inpdata.every(el => {
+        return el >= value;
+      });
     }, value);
     return this;
   }
 
   max(value: number) {
     this.set('max', (inpdata: Array<any>): boolean => {
-      for (let i = 0; i < inpdata.length; i++) {
-        if (inpdata[i] > value) {
-          return false;
-        }
-      }
-      return true;
+      return inpdata.every(el => {
+        return el <= value;
+      });
     }, value);
     return this;
   }
 
-  items(type: string | Function) {
+  items(typeFn: Function) {
     this.set('items', (inpdata: Array<any>): boolean => {
-      let checkTypeFn = null;
-      if (isString(type)) {
-        checkTypeFn = (it) => {
-          return getTypeOf(it) === type;
-        }
-      }
-      else if (isFunction(type)) {
-        checkTypeFn = type;
-      }
-      else {
+      if (!isFunction(typeFn)) {
         throw `type must be a string or a function`;
       }
-      for (let i = 0; i < inpdata.length; i++) {
-        if (!checkTypeFn(inpdata[i])) {
-          return false;
-        }
-      }
-      return true;
-    }, type);
+      return inpdata.every(el => {
+        return typeFn(el);
+      });
+    }, typeFn);
     return this;
   }
 
