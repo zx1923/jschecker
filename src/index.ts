@@ -54,4 +54,4 @@ class Checker {
   static not = not
 }
 
-export default Checker;
+export = Checker;

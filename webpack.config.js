@@ -1,13 +1,31 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
+// const buildTarget = process.argv;
+
+function getArgValue(key) {
+  for (let i = 0; i < process.argv.length; i++) {
+    const paramKey = process.argv[i];
+    if (paramKey === key) {
+      return process.argv[i + 1] || null;
+    }
+  }
+  return null;
+}
+
+const buildTarget = getArgValue('--target') || 'web';
+const buildOutPath = path.resolve(__dirname, `dist/${buildTarget}`);
+
+console.log(buildTarget);
+
 module.exports = {
+  target: buildTarget,
   entry: './src/index.ts',
   output: {
     filename: 'jschecker.js',
-    path: path.resolve(__dirname, 'dist/brow/lib'),
+    path: buildOutPath,
     libraryTarget: 'umd',
-    library: "Checker",
+    // library: "Checker",
   },
   module: {
     rules: [

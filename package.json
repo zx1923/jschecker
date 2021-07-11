@@ -6,8 +6,8 @@
   "scripts": {
     "clean:node": "gulp clean:node",
     "build:ts": "tsc",
-    "build:node-dev": "gulp dev",
-    "build:node": "npm run clean:node && gulp",
+    "build:node": "webpack --config webpack.config.js --mode production --target node",
+    "build:node-dev": "webpack --config webpack.config.js --mode development --target node",
     "build:brow": "webpack --config webpack.config.js --mode production",
     "build:brow-dev": "webpack --config webpack.config.js --mode development",
     "demo:brow": "webpack --config webpack.demo.js --mode development",
