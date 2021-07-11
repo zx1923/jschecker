@@ -48,7 +48,7 @@ class Str extends CheckBase {
 
   email() {
     this.set('email', (inpdata: string): boolean => {
-      return /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/.test(inpdata);
+      return /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,10})$/.test(inpdata);
     });
     return this;
   }
@@ -63,6 +63,13 @@ class Str extends CheckBase {
   uri() {
     this.set('uri', (inpdata: string): boolean => {
       return /^(\w+:\/\/)([0-9a-z.]+)(:[0-9]+)?([/0-9a-z.]+)?(\?[0-9a-z&=]+)?(#[0-9-a-z]+)?/i.test(inpdata);
+    });
+    return this;
+  }
+
+  url() {
+    this.set('url', (inpdata: string): boolean => {
+      return /^(https?:\/\/)([0-9a-z.]+)(:[0-9]+)?([/0-9a-z.]+)?(\?[0-9a-z&=]+)?(#[0-9-a-z]+)?/i.test(inpdata);
     });
     return this;
   }
@@ -83,6 +90,16 @@ class Str extends CheckBase {
 
   match(reg: RegExp) {
     this.set('match', (inpdata: string): boolean => {
+      if (!isRegExp(reg)) {
+        throw `Param of match must be type of RegExp`;
+      }
+      return reg.test(inpdata.toString());
+    }, reg);
+    return this;
+  }
+
+  fullmatch(reg: RegExp) {
+    this.set('fullmatch', (inpdata: string): boolean => {
       if (!isRegExp(reg)) {
         throw `Param of match must be type of RegExp`;
       }

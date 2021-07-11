@@ -90,14 +90,27 @@ describe(`Test strings`, () => {
   });
 
   test('string check width match()', () => {
-    const matchReg = /^[a-zA-Z0-9]+$/g;
+    const matchReg = /[a-zA-Z0-9]+/g;
     const checkMatch = Checker.string().match(matchReg).create();
 
     const str1 = '342jhggjGHJG';
     const str2 = '54gkkgh^&*hghgGJKg';
+    const str3 = '%&*)%)&)^&*';
 
     expect(checkMatch(str1)).toBeTruthy();
-    expect(checkMatch(str2)).toBeFalsy();
+    expect(checkMatch(str2)).toBeTruthy();
+    expect(checkMatch(str3)).toBeFalsy();
+  });
+
+  test('string check width fullmatch()', () => {
+    const matchReg = /^[a-zA-Z0-9]+$/g;
+    const checkFulmatch = Checker.string().fullmatch(matchReg).create();
+
+    const str1 = '342jhggjGHJG';
+    const str2 = '54gkkgh^&*hghgGJKg';
+
+    expect(checkFulmatch(str1)).toBeTruthy();
+    expect(checkFulmatch(str2)).toBeFalsy();
   });
 
   test('string check width empty()', () => {

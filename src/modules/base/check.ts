@@ -42,9 +42,9 @@ class CheckBase implements InputCheck {
     throw `Subclasses must implement this method`;
   }
 
-  set(item: string, method: Function, valset: any = null, desc: string = null) {
+  set(item: string, method: Function, desc: any = null) {
     this.checkList[item] = method;
-    this.descList[item] = this.translateDesc(desc, valset);
+    this.descList[item] = desc;
     return this;
   }
 
