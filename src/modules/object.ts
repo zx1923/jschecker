@@ -28,15 +28,15 @@ class Obj extends CheckBase {
     }
     for (let key in obj) {
       // 初次检测，obj[key] 可能为引用类型
-      if (checkFn(key, obj[key])) {
-        return true;
+      if (!checkFn(key, obj[key])) {
+        return false;
       }
       // 深度检测
       if (deep) {
         return this._isObjInclude(obj[key], checkFn, deep);
       }
     }
-    return false;
+    return true;
   }
 
   equal(value: object) {
@@ -76,9 +76,24 @@ class Obj extends CheckBase {
     let keyscheck = isArray(keysets) ? keysets : [keysets];
     this.set('invalidKeys', (inpdata: object) => {
       const checkFn = (key: string, value: any) => {
+        return !keyscheck.includes(key);
+      }
+      return this._isObjInclude(inpdata, checkFn, deepCheck);
+    }, keysets);
+    return this;
+  }
+
+  validKeys(keysets: string | Array<string>, deepCheck: boolean = false) {
+    const type = getTypeOf(keysets);
+    if (!objCheckRules.validKeysTypeVerify(type)) {
+      throw `Type of keysets '${type}' is invalid`;
+    }
+    let keyscheck = isArray(keysets) ? keysets : [keysets];
+    this.set('validKeys', (inpdata: object) => {
+      const checkFn = (key: string, value: any) => {
         return keyscheck.includes(key);
       }
-      return !this._isObjInclude(inpdata, checkFn, deepCheck);
+      return this._isObjInclude(inpdata, checkFn, deepCheck);
     }, keysets);
     return this;
   }
@@ -92,10 +107,25 @@ class Obj extends CheckBase {
 
     this.set('invalidValues', (inpdata: object) => {
       const checkFn = (key: string, value: any) => {
-        return valscheck.includes(value);
+        return !valscheck.includes(value);
       }
-      return !this._isObjInclude(inpdata, checkFn, deepCheck);
+      return this._isObjInclude(inpdata, checkFn, deepCheck);
     }, valsets);
+    return this;
+  }
+
+  validValues(keysets: string | Array<string>, deepCheck: boolean = false) {
+    const type = getTypeOf(keysets);
+    if (!objCheckRules.validValsTypeVerify(type)) {
+      throw `Type of keysets '${type}' is invalid`;
+    }
+    let keyscheck = isArray(keysets) ? keysets : [keysets];
+    this.set('validValues', (inpdata: object) => {
+      const checkFn = (key: string, value: any) => {
+        return keyscheck.includes(value);
+      }
+      return this._isObjInclude(inpdata, checkFn, deepCheck);
+    }, keysets);
     return this;
   }
 

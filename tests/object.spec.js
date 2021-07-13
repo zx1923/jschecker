@@ -57,6 +57,22 @@ describe(`Test object`, () => {
     expect(check1(objRight)).toBeTruthy();
     expect(check2(objRight)).toBeTruthy();
   });
+  
+  test('object check width validValues()', () => {
+    const objErr1 = {a: 1, b: 2};
+    const objErr2 = {name: 'Sean', list: [ 1, 2, 3 ]};
+    const objRight = {a: 1, b: 1, c: 1, d: 5};
+    const validArr = [1, 5];
+    const check1 = Checker.object().validValues(1).create();
+    const check2 = Checker.object().validValues(validArr).create();
+
+    expect(check1(objErr1)).toBeFalsy();
+    expect(check2(objErr1)).toBeFalsy();
+    expect(check1(objErr1)).toBeFalsy();
+    expect(check2(objErr2)).toBeFalsy();
+
+    expect(check2(objRight)).toBeTruthy();
+  });
 
   test('object check width invalidKeys()', () => {
     const keys = ['name', 'age'];
@@ -70,6 +86,22 @@ describe(`Test object`, () => {
 
     expect(checkUseForbidden(objRight)).toBeTruthy();
     expect(checkUseForbidden(objErr)).toBeFalsy();
+  });
+
+  test('object check width validKeys()', () => {
+    const keys = ['name', 'age'];
+    const objErr1 = { a: 1, b: 2, c: 3 };
+    const objErr2 = { name: 'Sean', age: 20, c: 3 };
+    const objRight = { name: 'Sean', age: 20};
+    const checkNoForbidden = Checker.object().create();
+    const checkUseForbidden = Checker.object().validKeys(keys).create();
+
+    expect(checkNoForbidden(objErr1)).toBeTruthy();
+    expect(checkNoForbidden(objErr2)).toBeTruthy();
+
+    expect(checkUseForbidden(objErr1)).toBeFalsy();
+    expect(checkUseForbidden(objErr2)).toBeFalsy();
+    expect(checkUseForbidden(objRight)).toBeTruthy();
   });
 
   test('object check width includeKeys', () => {
