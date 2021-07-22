@@ -129,6 +129,14 @@ class Str extends CheckBase {
     }, enumsets);
     return this;
   }
+
+  numerical() {
+    this.set('numerical', (inpdata: string): boolean => {
+      const num = inpdata.replace(/\.0+$/g, '');
+      return num === Number(num).toString();
+    });
+    return this;
+  }
 }
 
 export default Str;

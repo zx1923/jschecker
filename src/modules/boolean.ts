@@ -6,7 +6,7 @@ class Bool extends CheckBase {
     super();
   }
 
-  protected is(value: any) {
+  protected is() {
     return true;
   }
 
@@ -24,13 +24,13 @@ class Bool extends CheckBase {
 
   truthy() {
     return this.set('truthy', (inpdata: boolean) => {
-      return Boolean(inpdata) === true;
+      return (!!inpdata) === true;
     });
   }
 
   falsy() {
     return this.set('falsy', (inpdata: boolean) => {
-      return Boolean(inpdata) === false;
+      return (!!inpdata) === false;
     });
   }
 

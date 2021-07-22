@@ -1,5 +1,6 @@
 const Checker = require('../dist/build/index');
 const { Random } = require('mockjs');
+const { truncateSync } = require('fs');
 
 describe(`Test strings`, () => {
 
@@ -145,6 +146,15 @@ describe(`Test strings`, () => {
     expect(check('12', '34', '56')).toBeTruthy();
     expect(check('12', '34', '5TT6', '41fgdg')).toBeFalsy();
     expect(check(['12', '5TT6', '41fgdg'])).toBeFalsy();
+  });
+
+  test('string check width numerical()', () => {
+    const check = Checker.string().numerical().create();
+
+    expect(check('12')).toBeTruthy();
+    expect(check('12.0')).toBeTruthy();
+    expect(check('1abc')).toBeFalsy();
+    expect(check('0xaa')).toBeFalsy();
   });
 
 });

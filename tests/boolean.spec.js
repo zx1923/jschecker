@@ -51,7 +51,6 @@ describe(`Test boolean`, () => {
     expect(check({})).toBeFalsy();
     expect(check('')).toBeTruthy();
     expect(check(null)).toBeTruthy();
-    expect(check(undefined)).toBeTruthy();
   });
   
   test('boolean check width required()', () => {

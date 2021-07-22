@@ -19,6 +19,12 @@ function checkInputData(checkList: object, inpdata: any) {
   return true;
 }
 
+function isFilledUndefined(params: Array<any>) {
+  return params.every(el => {
+    return el === undefined;
+  });
+}
+
 class CheckBase implements InputCheck {
   protected checkList: object
   protected descList: object
@@ -28,10 +34,6 @@ class CheckBase implements InputCheck {
     this.checkList = {};
     this.descList = {};
     this.required = true;
-  }
-
-  private translateDesc(descItem: string, val: any) {
-
   }
 
   protected is(data: any): boolean {
@@ -48,7 +50,7 @@ class CheckBase implements InputCheck {
     return this;
   }
 
-  require(value: boolean) {
+  require(value: boolean = true) {
     this.required = value;
     return this;
   }
@@ -66,8 +68,11 @@ class CheckBase implements InputCheck {
   }
 
   create() {
-    return (...args: any): boolean => {
-      if (!args.length && this.required) {
+    const fn = (...args: any): boolean => {
+      if (!this.required && (!args.length || isFilledUndefined(args))) {
+        return true;
+      }
+      if (!args || !args.length) {
         return false;
       }
       for (let i = 0, len = args.length; i < len; i++) {
@@ -77,6 +82,7 @@ class CheckBase implements InputCheck {
       }
       return true;
     };
+    return fn;
   }
 }
 

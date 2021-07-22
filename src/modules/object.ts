@@ -22,7 +22,7 @@ class Obj extends CheckBase {
    * @param checkFn 检测函数
    * @param deep 是否深度检测
    */
-  private _isObjInclude(obj: object, checkFn: Function, deep: boolean = false) {
+  private _objDeepCheck(obj: object, checkFn: Function, deep: boolean = false) {
     if (!Object.keys(obj).length) {
       return false;
     }
@@ -33,7 +33,7 @@ class Obj extends CheckBase {
       }
       // 深度检测
       if (deep) {
-        return this._isObjInclude(obj[key], checkFn, deep);
+        return this._objDeepCheck(obj[key], checkFn, deep);
       }
     }
     return true;
@@ -78,7 +78,7 @@ class Obj extends CheckBase {
       const checkFn = (key: string, value: any) => {
         return !keyscheck.includes(key);
       }
-      return this._isObjInclude(inpdata, checkFn, deepCheck);
+      return this._objDeepCheck(inpdata, checkFn, deepCheck);
     }, keysets);
     return this;
   }
@@ -93,7 +93,7 @@ class Obj extends CheckBase {
       const checkFn = (key: string, value: any) => {
         return keyscheck.includes(key);
       }
-      return this._isObjInclude(inpdata, checkFn, deepCheck);
+      return this._objDeepCheck(inpdata, checkFn, deepCheck);
     }, keysets);
     return this;
   }
@@ -109,7 +109,7 @@ class Obj extends CheckBase {
       const checkFn = (key: string, value: any) => {
         return !valscheck.includes(value);
       }
-      return this._isObjInclude(inpdata, checkFn, deepCheck);
+      return this._objDeepCheck(inpdata, checkFn, deepCheck);
     }, valsets);
     return this;
   }
@@ -124,7 +124,7 @@ class Obj extends CheckBase {
       const checkFn = (key: string, value: any) => {
         return keyscheck.includes(value);
       }
-      return this._isObjInclude(inpdata, checkFn, deepCheck);
+      return this._objDeepCheck(inpdata, checkFn, deepCheck);
     }, keysets);
     return this;
   }
@@ -157,6 +157,29 @@ class Obj extends CheckBase {
       }
       return true;
     }, type);
+    return this;
+  }
+
+  every(fn: Function, deep: boolean = false) {
+    this.set('every', (inpdata: object) => {
+      const vryFn = (key: string, value: any) => {
+        return fn(key, value);
+      };
+      return this._objDeepCheck(inpdata, vryFn, deep);
+    });
+    return this;
+  }
+
+  verify(ruleObj: object) {
+    this.set('verify', (inpdata: object) => {
+      for (let key in ruleObj) {
+        const checkFn = ruleObj[key];
+        if (!checkFn(inpdata[key])) {
+          return false;
+        }
+      }
+      return true;
+    });
     return this;
   }
 

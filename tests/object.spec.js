@@ -159,4 +159,33 @@ describe(`Test object`, () => {
     expect(checkNotRequired()).toBeTruthy();
   });
 
+  test('object check width verify()', () => {
+    const rule = {
+      name: Checker.string().min(1).max(10).require().create(),
+      age: Checker.number().min(1).max(100).require().create(),
+      nick: Checker.string().require(false).create(),
+      email: Checker.string().email().require(false).create(),
+    };
+    const objErr1 = {
+      name: 'Tom',
+      age: 200,
+      nick: 'azqwxs',
+    };
+    const objErr2 = {
+      age: 20,
+      nick: 'azqwxs',
+      email: '123@qq.com',
+    };
+    const objRight = {
+      name: 'Tom',
+      age: 20,
+      nick: 'azqwxs',
+    };
+    const verify = Checker.object().verify(rule).create();
+
+    expect(verify(objErr1)).toBeFalsy();
+    expect(verify(objErr2)).toBeFalsy();
+    expect(verify(objRight)).toBeTruthy();
+  });
+
 });
