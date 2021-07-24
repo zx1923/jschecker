@@ -1,5 +1,5 @@
 import CheckBase from "./base/check";
-import { isFunction, isAsyncFunction } from '../utils/helper'
+import { isFunction, isAsyncFunction, getTypeOf } from '../utils/helper'
 
 class Func extends CheckBase {
   
@@ -21,6 +21,13 @@ class Func extends CheckBase {
   asynchronous() {
     this.set('asynchronous', (inpdata: Function): boolean => {
       return isAsyncFunction(inpdata);
+    });
+    return this;
+  }
+
+  synchronous() {
+    this.set('synchronous', (inpdata: Function): boolean => {
+      return getTypeOf(inpdata) === 'Function';
     });
     return this;
   }

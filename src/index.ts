@@ -4,7 +4,9 @@ import Obj from './modules/object';
 import Str from './modules/string';
 import Func from './modules/function';
 import Bool from './modules/boolean';
-import { and, or, not } from './modules/logic';
+import Logic from './modules/logic';
+
+const TypeLogic = new Logic();
 
 class Checker {
   /**
@@ -47,11 +49,10 @@ class Checker {
     return new Bool();
   }
 
-  static and = and
+  static and = TypeLogic.and.bind(TypeLogic)
 
-  static or = or
-
-  static not = not
+  static or = TypeLogic.or.bind(TypeLogic)
+  
 }
 
 export = Checker;

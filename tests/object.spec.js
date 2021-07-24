@@ -188,4 +188,21 @@ describe(`Test object`, () => {
     expect(verify(objRight)).toBeTruthy();
   });
 
+  test('object check width every()', () => {
+    const len = 3;
+    const objRight = {a: 1, b: 2, c: 3, d: 'hello'};
+    const objErr = {...objRight, e: [1, 2, 3]};
+    
+    const everyFn = (key, value) => {
+      const mustBeNum = Checker.number().create();
+      const mustBeStr = Checker.string().create()
+      return Checker.or(mustBeNum, mustBeStr).create()(value);
+    }
+    const check = Checker.object().every(everyFn).create();
+
+    expect(check(objRight)).toBeTruthy();
+    expect(check(objErr)).toBeFalsy();
+
+  });
+
 });

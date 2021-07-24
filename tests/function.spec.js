@@ -19,6 +19,17 @@ describe(`Test func`, () => {
     expect(checkNotRequired()).toBeTruthy();
   });
 
+  test('func check width oneOf()', () => {
+    const func1 = () => {};
+    const func2 = () => {};
+    const func3 = () => {};
+    const fnEnums = [ func1, func2 ];
+    const checkFnEnum = Checker.func().oneOf(fnEnums).create();
+
+    expect(checkFnEnum(func1, func1)).toBeTruthy();
+    expect(checkFnEnum(func3)).toBeFalsy();
+  });
+
   test('func check width asynchronous()', () => {
     const checkAsyncFn = Checker.func().asynchronous().create();
     const syncfn = () => {};
@@ -26,6 +37,15 @@ describe(`Test func`, () => {
 
     expect(checkAsyncFn(syncfn)).toBeFalsy();
     expect(checkAsyncFn(asyncfn)).toBeTruthy();
+  });
+
+  test('func check width synchronous()', () => {
+    const checkAsyncFn = Checker.func().synchronous().create();
+    const syncfn = () => {};
+    async function asyncfn() { };
+
+    expect(checkAsyncFn(syncfn)).toBeTruthy();
+    expect(checkAsyncFn(asyncfn)).toBeFalsy();
   });
 
 });

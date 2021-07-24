@@ -44,7 +44,7 @@ describe(`Test strings`, () => {
     const rdmstr = Random.string();
     const checkIp = Checker.string().ip().create();
     const checkEmail = Checker.string().email().create();
-    const checkUrl = Checker.string().uri().create();
+    const checkUri = Checker.string().uri().create();
 
     expect(checkIp(rdmIp)).toBeTruthy();
     expect(checkIp(rdmIp + Random.string(3))).toBeFalsy();
@@ -55,8 +55,17 @@ describe(`Test strings`, () => {
     expect(checkEmail(rdmEmail + ' ')).toBeFalsy();
     expect(checkEmail(rdmstr)).toBeFalsy();
 
-    expect(checkUrl(rdmUri)).toBeTruthy();
-    expect(checkUrl(rdmstr)).toBeFalsy();
+    expect(checkUri(rdmUri)).toBeTruthy();
+    expect(checkUri(rdmstr)).toBeFalsy();
+  });
+
+  test('string check width url()', () => {
+    const urlRight = 'http://www.abcd.com';
+    const urlErr = 'http:/www.abcd.com';
+    const checkUrl = Checker.string().url().create();
+
+    expect(checkUrl(urlRight)).toBeTruthy();
+    expect(checkUrl(urlErr)).toBeFalsy();
   });
 
   test('string check width lowercase() and uppercase()', () => {
@@ -155,6 +164,19 @@ describe(`Test strings`, () => {
     expect(check('12.0')).toBeTruthy();
     expect(check('1abc')).toBeFalsy();
     expect(check('0xaa')).toBeFalsy();
+  });
+
+  test('string check width hex()', () => {
+    const check = Checker.string().hex().create();
+
+    expect(check('12')).toBeTruthy();
+    expect(check('0.123')).toBeFalsy();
+    expect(check('123.0')).toBeFalsy();
+    expect(check('1abc')).toBeTruthy();
+    expect(check('0xaa')).toBeTruthy();
+    expect(check('0xaBc0')).toBeTruthy();
+    expect(check('0xaaGh')).toBeFalsy();
+    expect(check('puL02')).toBeFalsy();
   });
 
 });

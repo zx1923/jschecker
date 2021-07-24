@@ -137,6 +137,13 @@ class Str extends CheckBase {
     });
     return this;
   }
+
+  hex() {
+    this.set('hex', (inpdata: string) => {
+      return /^(0x)?[0-9a-f]+$/gi.test(inpdata);
+    });
+    return this;
+  }
 }
 
 export default Str;
