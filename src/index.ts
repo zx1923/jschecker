@@ -1,4 +1,4 @@
-import Arr from './modules/array';
+import { Arr, ArrOrdered } from './modules/array';
 import Num from './modules/number';
 import Obj from './modules/object';
 import Str from './modules/string';
@@ -52,7 +52,9 @@ class Checker {
   static and = TypeLogic.and.bind(TypeLogic)
 
   static or = TypeLogic.or.bind(TypeLogic)
-  
+
+  static ArrOrdered = ArrOrdered
+
 }
 
 export = Checker;

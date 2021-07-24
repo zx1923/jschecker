@@ -14,6 +14,7 @@
     "ts:test-conf": "ts-jest config:init",
     "test": "gulp dev && jest tests/ --coverage"
   },
+  "typings": "dist/types/index.d.ts",
   "author": "Sean",
   "license": "ISC",
   "devDependencies": {

@@ -56,8 +56,8 @@ describe(`Test array`, () => {
 
   test('array check with ordered()', () => {
     const arrData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
-    const checkUp = Checker.array().ordered('Up').create();
-    const checkDown = Checker.array().ordered('Down').create();
+    const checkUp = Checker.array().ordered(Checker.ArrOrdered.Up).create();
+    const checkDown = Checker.array().ordered(Checker.ArrOrdered.Down).create();
 
     expect(checkUp(arrData)).toBeFalsy();
     expect(checkDown(arrData)).toBeFalsy();

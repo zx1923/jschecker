@@ -3,7 +3,7 @@ import { isArray, isString, isFunction, getTypeOf } from '../utils/helper';
 import { arrCheckRules } from './base/verify';
 import { typeError } from '../utils/error';
 
-enum ArrOrderType {
+enum ArrOrdered {
   Up = 'Up',
   Down = 'Down',
 };
@@ -163,13 +163,13 @@ class Arr extends CheckBase {
     return this;
   }
 
-  ordered(type: ArrOrderType) {
+  ordered(type: ArrOrdered) {
     this.set('ordered', (inpdata: Array<any>): boolean => {
       let orderFn = null;
-      if (type === ArrOrderType.Up) {
+      if (type === ArrOrdered.Up) {
         orderFn = (a, b): boolean => { return a <= b };
       }
-      else if (type === ArrOrderType.Down) {
+      else if (type === ArrOrdered.Down) {
         orderFn = (a, b): boolean => { return a >= b };
       }
       else {
@@ -187,4 +187,7 @@ class Arr extends CheckBase {
 
 }
 
-export default Arr;
+export {
+  Arr,
+  ArrOrdered
+};
