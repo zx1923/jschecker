@@ -1,7 +1,11 @@
 {
   "name": "js-checker",
   "version": "1.0.0",
-  "description": "",
+  "description": "A js data validation library for use on the node side and the web side",
+  "keywords": [
+    "checker",
+    "verify"
+  ],
   "main": "lib/jschecker.js",
   "typings": "types/index.d.ts",
   "author": "Sean",
