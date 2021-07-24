@@ -1,4 +1,4 @@
-const Checker = require("js-checker");
+const Checker = require("ckr");
 
 const arrtest = [12, 34, 56, 78, 90];
 const checkRes = Checker.array().min(10).max(100).len(5).minLen(1).maxLen(10).create();

@@ -1,5 +1,5 @@
 {
-  "name": "js-checker",
+  "name": "ckr",
   "version": "1.0.0",
   "description": "A js data validation library for use on the node side and the web side",
   "keywords": [

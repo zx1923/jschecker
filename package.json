@@ -1,5 +1,5 @@
 {
-  "name": "js-checker",
+  "name": "jschecker",
   "version": "1.0.0",
   "description": "A js data validation library for use on the node side and the web side",
   "keywords": [
@@ -40,6 +40,7 @@
     "ts-loader": "^9.2.3",
     "typescript": "^4.3.5",
     "webpack": "^5.42.0",
-    "webpack-cli": "^4.7.2"
+    "webpack-cli": "^4.7.2",
+    "ckr": "^1.0.0"
   }
 }
