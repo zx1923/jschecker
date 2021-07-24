@@ -49,9 +49,13 @@ class Checker {
     return new Bool();
   }
 
-  static and = TypeLogic.and.bind(TypeLogic)
+  static and(...args: Array<Function>): typeof TypeLogic {
+    return TypeLogic.and.apply(TypeLogic, args);
+  }
 
-  static or = TypeLogic.or.bind(TypeLogic)
+  static or(...args: Array<Function>): typeof TypeLogic {
+    return TypeLogic.or.apply(TypeLogic, args);
+  }
 
   static ArrOrdered = ArrOrdered
 

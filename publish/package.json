@@ -1,0 +1,13 @@
+{
+  "name": "js-checker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "module/index.js",
+  "typings": "types/index.d.ts",
+  "author": "Sean",
+  "license": "ISC",
+  "files": [
+    "types",
+    "module"
+  ]
+}
