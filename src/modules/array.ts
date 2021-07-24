@@ -173,7 +173,7 @@ class Arr extends CheckBase {
         orderFn = (a, b): boolean => { return a >= b };
       }
       else {
-        throw `type must be obe of 'Up' or 'Down'`;
+        throw `type must be one of 'Up' or 'Down'`;
       }
       for (let i = 0; i < inpdata.length - 1; i++) {
         if (!orderFn(inpdata[i], inpdata[i + 1])) {
