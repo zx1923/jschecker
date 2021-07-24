@@ -6,13 +6,15 @@
   "scripts": {
     "clean:node": "gulp clean:node",
     "build:ts": "tsc",
+    "lib": "webpack --config webpack.config.js --mode production",
     "build:node": "webpack --config webpack.config.js --mode production --target node",
     "build:node-dev": "webpack --config webpack.config.js --mode development --target node",
-    "build:brow": "webpack --config webpack.config.js --mode production",
-    "build:brow-dev": "webpack --config webpack.config.js --mode development",
-    "demo:brow": "webpack --config webpack.demo.js --mode development",
+    "build:web": "npm run lib",
+    "build:web-dev": "webpack --config webpack.config.js --mode development",
+    "demo:web": "webpack --config webpack.demo.js --mode development",
     "ts:test-conf": "ts-jest config:init",
-    "test": "gulp dev && jest tests/ --coverage"
+    "test": "gulp dev && jest tests --coverage",
+    "publish": "gulp publish"
   },
   "author": "Sean",
   "license": "ISC",
@@ -22,6 +24,7 @@
     "@types/webpack": "^5.28.0",
     "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "copy-webpack-plugin": "^9.0.1",
     "gulp": "^4.0.2",
     "gulp-clean": "^0.4.0",
     "gulp-typescript": "^6.0.0-alpha.1",
@@ -33,7 +36,6 @@
     "ts-loader": "^9.2.3",
     "typescript": "^4.3.5",
     "webpack": "^5.42.0",
-    "webpack-cli": "^4.7.2",
-    "js-checker": "1.0.0"
+    "webpack-cli": "^4.7.2"
   }
 }

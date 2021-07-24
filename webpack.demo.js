@@ -3,7 +3,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: './demo/index.js',
+  entry: './demo/index.web.js',
   output: {
     filename: 'chunk.js',
     path: path.resolve(__dirname, 'dist/demo'),

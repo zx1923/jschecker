@@ -4,7 +4,7 @@
     "module": "commonjs",
     "removeComments": true,
     "declaration": true,
-    "outDir": "./dist/module",
+    "outDir": "./dist/checker",
     "declarationDir": "./dist/types/"
   },
   "exclude": [
