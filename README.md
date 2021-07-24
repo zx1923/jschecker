@@ -4,18 +4,17 @@
 
 - [jschecker](#jschecker)
   - [Features](#features)
+  - [安装](#安装)
   - [编译/打包](#编译打包)
-    - [node环境](#node环境)
-    - [浏览器环境](#浏览器环境)
+    - [打包为Library](#打包为library)
   - [单元测试](#单元测试)
   - [APIs](#apis)
     - [公共处理](#公共处理)
       - [create()](#create)
       - [is(input)](#isinput)
     - [逻辑处理](#逻辑处理)
-      - [and(arg1, arg2)](#andarg1-arg2)
-      - [or(arg1, arg2)](#orarg1-arg2)
-      - [not(expression)](#notexpression)
+      - [and(...args)](#andargs)
+      - [or(...arg)](#orarg)
     - [number](#number)
       - [number.equal(value)](#numberequalvalue)
       - [number.min(value)](#numberminvalue)
@@ -69,6 +68,18 @@
 - 支持链式调用；
 - 语法清晰，使用非常简单；
 
+## 安装
+
+```shell
+npm i ckr
+```
+
+或者
+
+```shell
+npm install ckr
+```
+
 ## 编译/打包
 
 首先运行下面命令安装依赖：
@@ -81,25 +92,15 @@ npm install
 
 以上命令执行完成后会在项目目录下安装开发依赖。
 
-### node环境
+### 打包为Library
 
 运行：
 
 ```shell
-npm run build:node
+npm run lib
 ```
 
-打包完成后的输出目录为 `dist/node` 。
-
-### 浏览器环境
-
-运行：
-
-```shell
-npm run build:brow
-```
-
-打包完成后的输出目录为 `dist/brow` 。
+打包完成后的输出目录为 `dist/lib` 。
 
 ## 单元测试
 
@@ -117,9 +118,8 @@ npm run test
 - **string()**
 - **array()**
 - **object()**
-- **and(arg1, arg2)**
-- **or(arg1, arg2)**
-- **not(expression)**
+- **and(...args)**
+- **or(...arg)**
 
 ### 公共处理
 
@@ -149,17 +149,13 @@ check(true);	// false, true 不是 Number 类型
 
 ### 逻辑处理
 
-#### and(arg1, arg2)
+#### and(...args)
 
 **and** 方法用于实现逻辑与判断，支持数组参数，或不定长参数，其实现逻辑类似于 `Array.every` ，当所传入的参数全部校验为 true 时则返回 true ，只要有一个判断为 false 则返回 false。
 
-#### or(arg1, arg2)
+#### or(...arg)
 
 **or** 方法与 **and** 方法类似，也接受传入数组或不定长参数，其实现逻辑与 `Array.some` 类似，当传入的参数至少有一个校验为 true 时返回 true ，否则返回 false 。
-
-#### not(expression)
-
-**not** 方法用于对给定的参数取逻辑非的值，等价于 `!` 运算符。
 
 下面看一个示例，使用 **jschecker** 将一个复杂的逻辑判断表达出来。
 
