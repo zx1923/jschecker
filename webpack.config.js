@@ -13,7 +13,7 @@ function getArgValue(key) {
 }
 
 const buildTarget = getArgValue('--target') || 'web';
-const buildOutPath = path.resolve(__dirname, `dist/${buildTarget}`);
+const buildOutPath = path.resolve(__dirname, `dist/lib`);
 
 module.exports = {
   target: buildTarget,
