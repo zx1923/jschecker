@@ -31,7 +31,7 @@ function isObject(obj: any): boolean {
  * @returns true/false
  */
 function isArray(obj: any): boolean {
-  return _is(obj, 'Array');
+  return Array.isArray(obj);
 }
 
 /**
